@@ -26,7 +26,7 @@ processor = PreProcessor(
 )
 
 class SitesSpider(scrapy.Spider):
-    name = "heritage"
+    name = "translationcheck"
     urls = []
     # furls = []
     eresults = {}
