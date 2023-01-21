@@ -42,7 +42,7 @@ TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
 REDIRECT_ENABLED = True
 
 AUTOTHROTTLE_ENABLED = True
-CONNECTION_STRING = 'sqlite:///data/checkingtext.db'
+CONNECTION_STRING = 'sqlite:///data/websites.db'
 
 DOWNLOAD_HANDLERS = {
     "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",

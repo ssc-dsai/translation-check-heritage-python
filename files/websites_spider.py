@@ -74,7 +74,7 @@ class SitesSpider(scrapy.Spider):
         page= response.meta["playwright_page"]
         pairid=str(response.meta["pairid"])
         language=response.meta["language"]
-        await page.screenshot(path="data/"+pairid+"-"+language+".png", full_page=True)
+        await page.screenshot(path="screenshots/"+pairid+"-"+language+".png", full_page=True)
 
         buffer = await page.screenshot(full_page=True)
         await page.close()
