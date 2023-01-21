@@ -6,7 +6,7 @@
 # The first comparison is like text with the rest
 # being mismatched.
 
-MISALIGN = False
+MISALIGN = True
 
 # Remove stopwords from the text
 STOPWORDS = False
@@ -98,8 +98,8 @@ def compare(text1, text2, language):
         # model_type="allenai/led-base-16384",
         # model_type="microsoft/deberta-xlarge-mnli",
         # model_type="bert-base-multilingual-cased",
-        # model_type="distilbert-base-multilingual-cased",
-        model_type="t5-large",
+        model_type="google/mt5-small",
+        # model_type="t5-large",
         rescale_with_baseline=True,
         lang=language,
     )[2].item()
