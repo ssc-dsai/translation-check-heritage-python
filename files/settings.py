@@ -14,7 +14,7 @@ CONCURRENT_REQUESTS = 64
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   'websites.middlewares.CrawlDownloaderMiddleware': 543,
+   'websites.middlewares.WebsitesDownloaderMiddleware': 543,
 }
 
 DOWNLOADER_MIDDLEWARES.update({

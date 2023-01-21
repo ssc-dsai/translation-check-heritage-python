@@ -37,8 +37,7 @@ class SitesSpider(scrapy.Spider):
 
     def start_requests(self):
         df = pd.read_excel(
-            # '/Users/scottsyms/code/HeritageCanada/data/Python Results.xlsx')
-            '/Users/scottsyms/code/HeritageCanada/data/test data.xlsx')
+            'data/test data.xlsx')
         count = 0
         for index, row in df.iterrows():
             count += 1
@@ -55,15 +54,7 @@ class SitesSpider(scrapy.Spider):
 
     async def parse(self, response):
 
-        # If the response is a redirect, assemble the new URL and add a request to the iterator stack
-        # if response.status in [301, 302]:
-        #     newurl = response.urljoin(
-        #         response.headers['Location'].decode("utf-8"))
-        #     yield scrapy.Request(url=newurl, callback=self.parse, meta=response.meta)
-
-        # if response.status == 200:
-        # Remove the HTML from the response body
-        
+        # Remove the HTML from the response body      
         strippeddata["content"] = bs4.BeautifulSoup(response.body, "lxml").get_text()
         htmlcontent=processor.process([strippeddata])
         print("HTML Content", htmlcontent)
@@ -79,14 +70,11 @@ class SitesSpider(scrapy.Spider):
         # text = [line for line in text if len(line.split()) > 5]
         text = '\n'.join(text)
 
-        # Debugging
-        # text=response.body.decode("utf-8")
-
         # Screenshot the page
         page= response.meta["playwright_page"]
         pairid=str(response.meta["pairid"])
         language=response.meta["language"]
-        await page.screenshot(path="/Users/scottsyms/code/HeritageCanada/data/"+pairid+"-"+language+".png", full_page=True)
+        await page.screenshot(path="data/"+pairid+"-"+language+".png", full_page=True)
 
         buffer = await page.screenshot(full_page=True)
         await page.close()
