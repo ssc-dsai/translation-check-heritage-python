@@ -10,7 +10,7 @@ import scrapy
 from haystack.nodes import PreProcessor
 from scrapy.utils.python import to_native_str
 
-logging.getLogger('scrapy').setLevel(logging.WARNING)
+logging.getLogger('scrapy').setLevel(logging.CRITICAL)
 
 strippeddata = {}
 
@@ -26,7 +26,7 @@ processor = PreProcessor(
 )
 
 class SitesSpider(scrapy.Spider):
-    name = "translationcheck"
+    name = "websites"
     urls = []
     # furls = []
     eresults = {}
