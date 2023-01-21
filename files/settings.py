@@ -1,6 +1,6 @@
-BOT_NAME = 'crawl'
-SPIDER_MODULES = ['crawl.spiders']
-NEWSPIDER_MODULE = 'crawl.spiders'
+BOT_NAME = 'websites'
+SPIDER_MODULES = ['websites.spiders']
+NEWSPIDER_MODULE = 'websites.spiders'
 
 # User agent
 USER_AGENT = 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
@@ -14,7 +14,7 @@ CONCURRENT_REQUESTS = 64
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   'crawl.middlewares.CrawlDownloaderMiddleware': 543,
+   'websites.middlewares.CrawlDownloaderMiddleware': 543,
 }
 
 DOWNLOADER_MIDDLEWARES.update({
@@ -25,7 +25,7 @@ DOWNLOADER_MIDDLEWARES.update({
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'crawl.pipelines.SaveDBPipeline': 300,
+   'websites.pipelines.SaveDBPipeline': 300,
 }
 
 # Enable and configure HTTP caching (disabled by default)
