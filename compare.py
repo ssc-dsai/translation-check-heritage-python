@@ -6,7 +6,7 @@
 # The first comparison is like text with the rest
 # being mismatched.
 
-MISALIGN = True
+MISALIGN = False
 
 # Remove stopwords from the text
 STOPWORDS = False
@@ -17,7 +17,6 @@ STOPWORDS = False
 import warnings
 
 from bert_score import score
-from evaluate import load
 
 if MISALIGN:
     from nltk.corpus import stopwords
@@ -108,7 +107,7 @@ def compare(text1, text2, language):
 
 # Connect to SQLITEdatabase and intialize the session
 dbcon = create_engine(
-    "sqlite://///Users/scottsyms/code/HeritageCanada/data/checkingtext.db"
+    'sqlite:///websites/data/websites.db'
 )
 Base = declarative_base()
 
@@ -170,8 +169,6 @@ for i in range(1, max_pairid + 1):
 
             # Increment the row counter
             rowcounter += 1
-
-        print("Comparing: ", frozenenglish1[:50], english2[:50])
 
         if MISALIGN:
             # Test comparision- only the first comparison pair is like to like

@@ -80,7 +80,7 @@ fr_es_model = MarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-fr-es")
 fr_es_model.to(device)
 
 dbcon = create_engine(
-    'sqlite:////Users/scottsyms/code/HeritageCanada/data/checkingtext.db')
+    'sqlite:///websites/data/websites.db')
 
 metadata = MetaData()
 source = Table(
