@@ -52,3 +52,4 @@ screenshots/12-en.png filter=lfs diff=lfs merge=lfs -text
 screenshots/16-fr.png filter=lfs diff=lfs merge=lfs -text
 screenshots/25-en.png filter=lfs diff=lfs merge=lfs -text
 screenshots/26-fr.png filter=lfs diff=lfs merge=lfs -text
+websites/data/test[[:space:]]data.xlsx filter=lfs diff=lfs merge=lfs -text
