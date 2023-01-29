@@ -26,7 +26,7 @@ websites.  We create standard scrapy project called ```websites``` and replace t
 * ```pipelines.py```- a custom module that saves the crawl results to a SQLite database (websites.db).
 * ```websites_spider.py```- a script that retreives the list of URLs to be crawled, renders the content using a headless browser, and extracts the text from the page.  The results are passed to the ```pipelines.py``` script.
 
-### ```websites_spider.py```
+### websites_spider.py
 The script extends the ```Scrapy.spider``` class with two methods.
 
 The ```start_requests``` function uses Pandas to open an __Excel__ spreadsheet containing the source URLs. The script uses a ```pairid``` to associate the French and English versions of a site's web pages.
@@ -43,8 +43,10 @@ The ```parse``` function takes the page's browser rendering and extracts the tex
 
 All lines with less than a minimum number of words are stripped from the text in an attempt to remove some of the common page navigation elements
 
+### pipelines.py
 The ```pipelines.py``` script takes the URL, screenshot, language and text from the crawl and pushes the content into an SQLite database.  If the database and ```source``` table exists, the script will just append the data to the table.  If the database doesn't exist, the script will just create it.
 
+### settings.py
 The ```settings.py``` is fairly standard with one exception. As of the current release, enabling content caching will break the *Playwright* page snapshotting functionality.
 
 
