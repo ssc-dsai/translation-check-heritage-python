@@ -9,7 +9,7 @@
 MISALIGN = True
 
 # Remove stopwords from the text
-STOPWORDS = False
+STOPWORDS = True
 
 ##############################
 
@@ -18,8 +18,10 @@ import warnings
 
 from bert_score import score
 
-if MISALIGN:
+if STOPWORDS:
     from nltk.corpus import stopwords
+
+
 from sqlalchemy import (
     Boolean,
     Column,
@@ -40,7 +42,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import select
 
 # Strip out stopwords
-if MISALIGN:
+if STOPWORDS:
     stopen = stopwords.words("english")
     stopes = stopwords.words("spanish")
     stopfr = stopwords.words("french")
@@ -48,53 +50,57 @@ if MISALIGN:
 warnings.filterwarnings("ignore")
 warnings.simplefilter("ignore")
 
+def newcompare(text1, text2, language):
+    return 0
 
-# Comparison function
+# Compare the two text using BERTScore
 def compare(text1, text2, language):
+
+    print("Text1: ", text1)
+    print("Text2: ", text2)
+
     if STOPWORDS:
+        # Remove numbers from the text
+        # text1=''.join([c for c in text1 if not c.isnumeric()])
+        # text2=''.join([c for c in text2 if not c.isnumeric()])
+
+        # print(text1, text2)
         # Strip out stopwords
         if language == "en":
-            text1 = [
-                " ".join([word for word in text.split() if word not in stopen])
-                for text in text1
-            ]
-            text2 = [
-                " ".join([word for word in text.split() if word not in stopen])
-                for text in text2
-            ]
+            text1 = " ".join([word for word in text1.split(" ") if word not in stopen])
+            text2 = " ".join([word for word in text2.split(" ") if word not in stopen])
         elif language == "es":
-            text1 = [
-                " ".join([word for word in text.split() if word not in stopes])
-                for text in text1
-            ]
-            text2 = [
-                " ".join([word for word in text.split() if word not in stopes])
-                for text in text2
-            ]
+            text1 = " ".join([word for word in text1.split(" ") if word not in stopes])
+            text2 = " ".join([word for word in text2.split(" ") if word not in stopes])
         elif language == "fr":
-            text1 = [
-                " ".join([word for word in text.split() if word not in stopfr])
-                for text in text1
-            ]
-            text2 = [
-                " ".join([word for word in text.split() if word not in stopfr])
-                for text in text2
-            ]
-    else:
-        # Pad the shorter text with empty strings
-        while len(text1) > len(text2):
-            text2.append("")
-        while len(text1) < len(text2):
-            text1.append("")
+            text1 = " ".join([word for word in text1.split(" ") if word not in stopfr])
+            text2 = " ".join([word for word in text2.split(" ") if word not in stopfr])
 
+    print("***************")
+    print("Text1: ", text1)
+    print("Text2: ", text2)
+    text1=text1.split("\n")
+    text2=text2.split("\n")
 
-    length1=len(text1[0])
-    length2=len(text2[0])
+    # Pad the shorter text with empty strings
+    while len(text1) > len(text2):
+        text2.append("")
+    while len(text1) < len(text2):
+        text1.append("")
+
+    text1=" ".join(text1)
+    text2=" ".join(text2)
+
+    length1=len(text1)
+    length2=len(text2)
+
+    print("Length1: ", length1)
+    print("Length2: ", length2)
 
     # Return the F1 score from the comparison
     return score(
-        text1,
-        text2,
+        [text1],
+        [text2],
         # model_type="allenai/led-base-16384",
         # model_type="microsoft/deberta-xlarge-mnli",
         # model_type="bert-base-multilingual-cased",
@@ -173,14 +179,14 @@ for i in range(1, max_pairid + 1):
         if MISALIGN:
             # Test comparision- only the first comparison pair is like to like
             # Subsequent comparisons are are against disparate texts
-            englishscore = compare([frozenenglish1], [english2], "en")
-            frenchscore = compare([frozenfrench1], [french2], "fr")
-            spanishscore = compare([frozenspanish1], [spanish2], "es")
+            englishscore = compare(frozenenglish1, english2, "en")
+            frenchscore = compare(frozenfrench1, french2, "fr")
+            spanishscore = compare(frozenspanish1, spanish2, "es")
         else:
             # Production comparision
-            englishscore = compare([english1], [english2], "en")
-            frenchscore = compare([french1], [french2], "fr")
-            spanishscore = compare([spanish1], [spanish2], "es")
+            englishscore = compare(english1, english2, "en")
+            frenchscore = compare(french1, french2, "fr")
+            spanishscore = compare(spanish1, spanish2, "es")
 
         # englishscore = sum([x[0].item() for x in englishscore])
         # frenchscore = sum([x[0].item() for x in frenchscore])

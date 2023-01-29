@@ -49,3 +49,4 @@ DOWNLOAD_HANDLERS = {
     "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
 }
 
+LOG_LEVEL = 'WARNING'
