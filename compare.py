@@ -6,7 +6,7 @@
 # The first comparison is like text with the rest
 # being mismatched.
 
-MISALIGN = True
+MISALIGN = False
 
 # Remove stopwords from the text
 STOPWORDS = True
@@ -17,6 +17,8 @@ STOPWORDS = True
 import warnings
 
 from bert_score import score
+
+import nltk
 
 if STOPWORDS:
     from nltk.corpus import stopwords
@@ -50,8 +52,31 @@ if STOPWORDS:
 warnings.filterwarnings("ignore")
 warnings.simplefilter("ignore")
 
+# Pull down some models to tag parts of speech in Spanish, French and English
+# nltk.download("averaged_perceptron_tagger")
+# nltk.download("punkt")
+# nltk.download('french_UD_POS_Tagger')
+# nltk.download('conll2002')
+
+
+
 def newcompare(text1, text2, language):
     return 0
+
+
+# def justnouns(text, language):
+#     if language=="en":
+#         language=="eng"
+#     elif language=="es":
+#         language="spa"
+#     elif language=="fr":
+#         language="fra"
+#     words = nltk.word_tokenize(text)
+#     tagged_words = nltk.pos_tag(words, lang=language)
+#     nouns = [word for word, pos in tagged_words if pos in ['NN', 'NNS']]
+#     return nouns
+
+
 
 # Compare the two text using BERTScore
 def compare(text1, text2, language):
@@ -96,6 +121,9 @@ def compare(text1, text2, language):
 
     print("Length1: ", length1)
     print("Length2: ", length2)
+
+    # text1=justnouns(text1, language)
+    # text2=justnouns(text2, language)
 
     # Return the F1 score from the comparison
     return score(
@@ -200,9 +228,9 @@ for i in range(1, max_pairid + 1):
         stmt = (
             source.update()
             .values(
-                bertscoreenglish=englishscore,
-                bertscorefrench=frenchscore,
-                bertscorespanish=spanishscore,
+                bertscoreenglish=englishscore*englishscore,
+                bertscorefrench=frenchscore*frenchscore,
+                bertscorespanish=spanishscore*spanishscore
             )
             .where(source.c.pairid == i)
         )

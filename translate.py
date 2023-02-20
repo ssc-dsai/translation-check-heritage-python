@@ -54,7 +54,7 @@ if torch.cuda.is_available():
     print("Using CUDA")
 elif torch.has_mps:
     dev = "cpu"
-    # torch.device = "cpu"
+    # dev = "mps"
     print("Using Apple MPS")
 else:
     dev = "cpu"
